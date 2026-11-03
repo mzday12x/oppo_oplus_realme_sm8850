@@ -302,6 +302,14 @@ jobs:
             echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
             echo "ksuver=$KSU_VERSION" >> $GITHUB_OUTPUT
             cd ..
+            # FinaSU 头文件补全（kernel/include/uapi 是软链指向仓库根 uapi/，集成后软链断裂）
+            echo "补全 FinaSU 头文件..."
+            mkdir -p ./common/include/uapi
+            cp -f ./KernelSU/kernel/include/*.h ./common/include/ 2>/dev/null || true
+            cp -f ./uapi/*.h ./common/include/uapi/ 2>/dev/null || true
+            # susfs.h 等 linux 头文件（FinaSU 树内 SUSFS 依赖）
+            git clone --depth=1 -b oki-android16-6.12 https://github.com/cctv18/susfs4oki.git /tmp/susfs4oki_fin 2>/dev/null || git clone --depth=1 https://github.com/cctv18/susfs4oki.git /tmp/susfs4oki_fin 2>/dev/null || true
+            cp -f /tmp/susfs4oki_fin/kernel_patches/include/linux/*.h ./common/include/linux/ 2>/dev/null || true
           else
             echo "已选择无内置KernelSU模式，跳过KernelSU配置..."
           fi
