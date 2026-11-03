@@ -306,7 +306,8 @@ jobs:
             echo "补全 FinaSU 头文件..."
             mkdir -p ./common/include/uapi
             cp -f ./KernelSU/kernel/include/*.h ./common/include/ 2>/dev/null || true
-            cp -f ./uapi/*.h ./common/include/uapi/ 2>/dev/null || true
+            cp -f ./KernelSU/uapi/*.h ./common/include/uapi/ 2>/dev/null || true
+            ls -la ./common/include/uapi/ 2>/dev/null || true
             # susfs.h 等 linux 头文件（FinaSU 树内 SUSFS 依赖）
             git clone --depth=1 -b oki-android16-6.12 https://github.com/cctv18/susfs4oki.git /tmp/susfs4oki_fin 2>/dev/null || git clone --depth=1 https://github.com/cctv18/susfs4oki.git /tmp/susfs4oki_fin 2>/dev/null || true
             cp -f /tmp/susfs4oki_fin/kernel_patches/include/linux/*.h ./common/include/linux/ 2>/dev/null || true
