@@ -311,6 +311,10 @@ jobs:
             # susfs.h 等 linux 头文件（FinaSU 树内 SUSFS 依赖）
             git clone --depth=1 -b oki-android16-6.12 https://github.com/cctv18/susfs4oki.git /tmp/susfs4oki_fin 2>/dev/null || git clone --depth=1 https://github.com/cctv18/susfs4oki.git /tmp/susfs4oki_fin 2>/dev/null || true
             cp -f /tmp/susfs4oki_fin/kernel_patches/include/linux/*.h ./common/include/linux/ 2>/dev/null || true
+            # 固定 KSU_VERSION 为 33156（FinaSU v1.4.3 默认 30000+git提交数=33084）
+            sed -i 's/expr 30000 + $(KSU_GIT_VERSION)/expr 33156/' ./KernelSU/kernel/Kbuild
+            echo "已固定 KSU_VERSION=33156"
+
           else
             echo "已选择无内置KernelSU模式，跳过KernelSU配置..."
           fi
