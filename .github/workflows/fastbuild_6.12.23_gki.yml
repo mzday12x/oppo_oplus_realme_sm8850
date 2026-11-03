@@ -316,7 +316,7 @@ jobs:
           fi
 
       - name: 应用 KernelSU & SUSFS 补丁
-        if: inputs.susfs_enable && github.event.inputs.ksu_type != 'finasu'
+        if: inputs.susfs_enable
         run: |
           cd kernel_workspace
           if [[ ${{ github.event.inputs.ksu_type }} != "none" ]]; then
